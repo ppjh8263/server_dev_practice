@@ -25,7 +25,7 @@ SECRET_KEY = 'ofkt!h-&*+%o)gt4+kt+et!(ea!&-v=v$@(jx0xv1*x)b)0p3m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"] # 모든 사용자 받기
 
 
 # Application definition
