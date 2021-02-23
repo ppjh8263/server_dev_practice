@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>To-Do</title>
+    </head>
+
+    <body>
+        <form action="/todo/create" method="post" class="form-inline">
+            <div>
+                <label>name</label>
+                <input type="text" name="name"/>
+            </div>
+            <div>
+                <label>end_date</label>
+                <input type="text" name="end_date"/>
+            </div>
+            <div>
+                <label>user_id</label>
+                <input type="text" name="user_id"/>
+            </div>
+            <button type="submit"> 추가</button>
+        </form>
+
+        <table>
+            {% for task in task_list %}
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.start_date }}</td>
+                <td>{{ task.end_date }}</td>
+                <td>{{ task.finish_date }}</td>
+                <td>{{ task.state }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </body>
+</html>
+
+W
