@@ -5,6 +5,7 @@ from datetime import datetime
 from django.shortcuts import render
 
 
+
 class Todo(APIView):
     def post(self, request):
         user_id = request.data.get('user_id', "")
@@ -16,11 +17,12 @@ class Todo(APIView):
 
         tasks = Task.objects.all()
         task_list = []
-        for task in tasks: task_list.append(
-            dict(name=task.name,
-                 start_date=task.start_date,
-                 end_date=task.end_date,
-                 state=task.state))
+        for task in tasks:
+            task_list.append(
+                    dict(name=task.name,
+                        start_date=task.start_date,
+                        end_date=task.end_date,
+                        state=task.state))
 
         context = dict(task_list=task_list)
         return render(request, 'todo/todo.html', context=context)
@@ -38,7 +40,6 @@ class Todo(APIView):
 
         context = dict(task_list=task_list)
         return render(request, 'todo/todo.html', context=context)
-
 
 class TaskCreate(APIView):
     def post(self, request):
