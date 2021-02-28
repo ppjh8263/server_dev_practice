@@ -27,17 +27,41 @@ class AppLogin(APIView):
             return Response(dict(msg="로그인 실패, 비밀번호 틀림!"))
 
 
+class AppLogout(APIView):
+    def post(self, request):
+        pass
+
+
+
 class RegistUser(APIView):
     def post(self, request):
-        serializer = LoginUserSerializer(request.data)
+        user_id = request.data['user_id']
+        user_pw = request.data['user_pw']
 
-        if LoginUser.objects.filter(user_id=serializer.data['user_id']).exist():
-            user = LoginUser.objects.filter(user_id=serializer.data['user_id']).first
-            data = dict(msg="동일한 ID가 있습니다.",
-                        user_id=user.user_id,
-                        user_pw=user.user_pw)
+        if user_id == '' or user_id is None or user_pw == '' or user_pw is None:
+            return Response(data=dict(msg='잘못된 입력입니다.'))
 
-            return Response(data)
+        user_pw = make_password(user_pw)
 
-        user = serializer.create(request.data)
-        return Response(LoginUserSerializer(user).data)
+        if LoginUser.objects.filter(user_id=user_id).exists():
+            return Response(data=dict(msg='이미 존재하는 아이디 입니다.'))
+
+        LoginUser.objects.create(user_id = user_id,
+                                 user_pw = user_pw)
+
+        return Response(data=dict(msg='회원가입에 성공했습니다.',user_id=user_id))
+
+# class RegistUser(APIView):
+#     def post(self, request):
+#         serializer = LoginUserSerializer(request.data)
+#
+#         if LoginUser.objects.filter(user_id=serializer.data['user_id']).exist():
+#             user = LoginUser.objects.filter(user_id=serializer.data['user_id']).first
+#             data = dict(msg="동일한 ID가 있습니다.",
+#                         user_id=user.user_id,
+#                         user_pw=user.user_pw)
+#
+#             return Response(data)
+#
+#         user = serializer.create(request.data)
+#         return Response(LoginUserSerializer(user).data)
